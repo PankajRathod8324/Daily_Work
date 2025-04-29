@@ -234,6 +234,7 @@ public class AccountManagerOrderAppController : Controller
         var tax = _accountmanagerorderapp.GetOrderTaxesByOrderId(orderId);
         var alltax = _taxService.GetIsEnabledAndIsDefaultTaxes();
         var IsDefault = _taxService.GetIsEnabledAndNotIsDefaultTaxes();
+        var orderDefault = _accountmanagerorderapp.GetOrderTaxesDefaultByOrderId(orderId);
         var categoryvm = new MenuCategoryVM
         {
             CategoryName = categories.FirstOrDefault()?.CategoryName,
@@ -246,13 +247,13 @@ public class AccountManagerOrderAppController : Controller
                 TaxAmount = t.TaxAmount,
                 TaxTypeId = t.TaxTypeId,
             }).ToList() : tax,
-            IsDefaultTaxes = IsDefault.Select(t => new TaxVM
+            IsDefaultTaxes = (orderDefault.Count == 0) ? IsDefault.Select(t => new TaxVM
             {
                 TaxId = t.TaxId,
                 TaxName = t.TaxName,
                 TaxAmount = t.TaxAmount,
                 TaxTypeId = t.TaxTypeId,
-            }).ToList(),
+            }).ToList() : orderDefault,
             SgstAmt = order?.SgstAmt,
             OrderComment = order?.OrderInstructions,
             IsSgstInclude = order?.IsSgstInclude,

@@ -76,8 +76,16 @@ public class AccountManagerOrderAppRepository : IAccountManagerOrderAppRepositor
     {
         var orderTaxes = _context.OrderTaxes
             .Include(ot => ot.Tax)
-            .Where(ot => ot.OrderId == OrderId)
-            .ToList();
+            .Where(ot => ot.OrderId == OrderId && ot.Tax.IsEnabled == true && ot.Tax.IsDefault == true).ToList();
+
+        return orderTaxes;
+    }
+
+    public List<OrderTax> GetOrderTaxesDefaultByOrderId(int OrderId)
+    {
+         var orderTaxes = _context.OrderTaxes
+            .Include(ot => ot.Tax)
+            .Where(ot => ot.OrderId == OrderId && ot.Tax.IsEnabled == true && ot.Tax.IsDefault == false).ToList();
 
         return orderTaxes;
     }

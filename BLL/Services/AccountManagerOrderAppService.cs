@@ -298,6 +298,19 @@ public class AccountManagerOrderAppService : IAccountManagerOrderAppService
         return finaltaxdata;
     }
 
+    public List<TaxVM> GetOrderTaxesDefaultByOrderId(int OrderId)
+    {
+        var ordertax = _accountmanagerorderapprepository.GetOrderTaxesDefaultByOrderId(OrderId);
+        var finaltaxdata = ordertax.Select(tax => new TaxVM
+        {
+            TaxId = (int)tax.TaxId,
+            TaxAmount = (decimal)tax.TaxRate,
+            TaxName = _taxRepository.GetTaxNameById((int)tax.TaxId),
+            TaxTypeId = _taxRepository.GetTexTypeIdByTaxId((int)tax.TaxId),
+        }).ToList();
+        return finaltaxdata;
+    }
+
     public bool DeleteWaitingToken(int waitingId)
     {
         var waitingList = _accountmanagerorderapprepository.GetWaitingData(waitingId);
@@ -579,7 +592,7 @@ public class AccountManagerOrderAppService : IAccountManagerOrderAppService
             var existingOrderTaxes = _orderRepository.GetOrderTaxesByOrderId(orderId);
             foreach (var tax in existingOrderTaxes)
             {
-                if (orderDetailsArray[0].IsSgstIncluded == true && _taxRepository.GetTaxNameById((int)tax.TaxId) == "SGST")
+                if (orderDetailsArray[0].IsSgstIncluded == true)
                 {
                     //if sgst tax is not included then do not add sgst tax in ordertax
                     existorder.SgstAmt = orderDetailsArray[0].SgstAmt;

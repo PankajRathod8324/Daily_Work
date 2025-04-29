@@ -22,6 +22,8 @@ public interface IAccountManagerOrderAppService
 
     List<TaxVM> GetOrderTaxesByOrderId(int OrderId);
 
+     List<TaxVM> GetOrderTaxesDefaultByOrderId(int OrderId);
+
     int GetOrderIdByCustomerId(int customerId);
 
     int GetOrderIdByCustomerIdActiveOrder(int customerId);

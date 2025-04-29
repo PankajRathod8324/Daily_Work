@@ -207,8 +207,39 @@
                                 
                                 @foreach (var tax in Model.IsDefaultTaxes)
                                 {
-                                    <div class="d-flex gap-2"><input class="sgstchkboxes" type="checkbox" data-amount="@tax.TaxAmount"  data-type="@tax.TaxTypeId"
+                                     @if (ViewBag.OrderId == null)
+                                    {
+                                        subtotal = 0;
+                                    }
+                                    else
+                                    {
+                                        subtotal = @ViewBag.SubTotal;
+                                        }
+                                     @if (subtotal != 0)
+                                     {
+                                    <div class="d-flex gap-2"><input class="sgstchkboxes" type="checkbox" checked data-amount="@if(tax.TaxTypeId == 2 && subtotal != 0){
+                                                                                                                                                                                                @((tax.TaxAmount * 100) / subtotal)
+                                                                                                                                            }
+                                                                                                                                            else
+                                                                                                                                            {
+
+                                                                                                                                                                                                                @tax.TaxAmount
+                                                                                                                                            }
+                                                                                                " data-type="@tax.TaxTypeId"
+                                                data-id="@tax.TaxId">@tax.TaxName</div>
+                                            }
+                                            else{
+                                                 <div class="d-flex gap-2"><input class="sgstchkboxes" type="checkbox" data-amount="@if(tax.TaxTypeId == 2 && subtotal != 0){
+                                                                                                                                                                    @((tax.TaxAmount * 100) / subtotal)
+                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                else
+                                                                                                                {
+
+                                                                                                                                                                                    @tax.TaxAmount
+                                                                                                                }
+                                                                    " data-type="@tax.TaxTypeId"
                                             data-id="@tax.TaxId">@tax.TaxName</div>
+                                            }
                                 }
 
 
@@ -233,17 +264,61 @@
                                         <span class="text-secondary fw-bold subtotal">@ViewBag.SubTotal</span>
                                     }
                                 </div>
-                                @foreach (var tax in Model.OrderTaxes)
+                                
+                                 @foreach (var tax in Model.OrderTaxes)
                                 {
-                                    <div class="d-block">
-                                        <span>₹</span>
-                                        <span class="taxbtn" data-amount="@tax.TaxAmount" data-type="@tax.TaxTypeId"
+                                   
+                                        @if (subtotal != 0)
+
+                                        {
+                                            <div class="d-block">
+                                                <span>₹</span>
+                                                <span class="taxbtn" data-amount="@if(tax.TaxTypeId == 2 && subtotal != 0){
+                                                                                                                                                                                                @((tax.TaxAmount * 100) / subtotal)
+                                                                                                                                            }
+                                                                                                                                            else
+                                                                                                                                            {
+
+                                                                                                                                                                                                                @tax.TaxAmount
+                                                                                                                                            }
+                                                                                                " data-type="@tax.TaxTypeId"
+                                                data-id="@tax.TaxId">@tax.TaxAmount</span>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div>
+                                            <span>₹</span>
+                                            <span class="taxbtn" data-amount="@if(tax.TaxTypeId == 2 && subtotal != 0){
+                                                                                                                                                                    @((tax.TaxAmount * 100) / subtotal)
+                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                else
+                                                                                                                {
+
+                                                                                                                                                                                    @tax.TaxAmount
+                                                                                                                }
+                                                                    " data-type="@tax.TaxTypeId"
                                             data-id="@tax.TaxId">0.00</span>
                                     </div>
                                 }
+
+                                                                }
+
+                                                                
+                                
                                 <div class="d-none itemtaxdiv">
-                                    <span>₹</span>
+                                    @if(subtotal != 0)
+                                    {
+                                        <span>₹</span>
                                     <span class="itemtaxrate">0.00</span>
+                                    }
+                                    else
+                                    {
+                                        <span>₹</span>
+                                    <span class="itemtaxrate">@Model.SgstAmt</span>
+                                    }
+                                    
                                 </div>
 
 
@@ -252,11 +327,41 @@
 
                                     @foreach (var tax in Model.IsDefaultTaxes)
                                     {
+                                         @if (subtotal != 0)
+
+                                        {
+                                            <div class="d-block">
+                                                <span>₹</span>
+                                                <span class="taxdefaultbtn sgstchkbox" data-amount="@if(tax.TaxTypeId == 2 && subtotal != 0){
+                                                                                                                                                                                                @((tax.TaxAmount * 100) / subtotal)
+                                                                                                                                            }
+                                                                                                                                            else
+                                                                                                                                            {
+
+                                                                                                                                                                                                                @tax.TaxAmount
+                                                                                                                                            }
+                                                                                                " data-type="@tax.TaxTypeId"
+                                                data-id="@tax.TaxId">@tax.TaxAmount</span>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
                                         <div>
                                             <span>₹</span>
-                                            <span class="taxdefaultbtn sgstchkbox" data-amount="@tax.TaxAmount"  data-type="@tax.TaxTypeId"
+                                            <span class="taxdefaultbtn sgstchkbox" data-amount="@if(tax.TaxTypeId == 2 && subtotal != 0){
+                                                                                                                                                                    @((tax.TaxAmount * 100) / subtotal)
+                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                else
+                                                                                                                {
+
+                                                                                                                                                                                    @tax.TaxAmount
+                                                                                                                }
+                                                                    " data-type="@tax.TaxTypeId"
                                             data-id="@tax.TaxId">0.00</span>
-                                        </div>
+                                    </div>
+                                }
+
                                     }
                                 </div>
 
@@ -525,12 +630,13 @@
     let FinalArrayToBeSubmit = [];
     let FinalOrderSum = @TotalAmountOrder;
     let FinalSubtotalSum = @subtotal;
-    let FinalTaxSum = @TotalAmountOrder - @subtotal;
+    let FinalTaxSum = 0;
     let selectedcategoryId = 0;
     let customerid = 0;
     let orderid = 0;
     let tempOrderComment = "";
     let sgstamt = 0;
+    let itemratetax = @Model.SgstAmt;
     let paymentoption = "";
 
     $(document).ready(function () {
@@ -1060,21 +1166,27 @@
 
                     FinalSubtotalSum = total;
                     $(".subtotal").text(total.toFixed(2));
+                    FinalTaxSum = 0;
 
-                    calculateTax();
-
-                   
-                    $(".ItemDataCard").each(function () {
+                     $(".ItemDataCard").each(function () {
                         var itemtax = $(this).data('taxpercentage');
                         console.log(itemtax + "Item Tax");
                         if (itemtax != 0.00) {
                             $('.itemtaxdiv').removeClass('d-none');
                             $('.itemtaxrate').text(itemtax * FinalSubtotalSum / 100);
-                            console.log(itemtax * FinalSubtotalSum / 100 + "Item Tax");
+                            itemratetax = parseFloat(itemtax * FinalSubtotalSum / 100);
                         }
-                        console.log(itemtax + "Item Tax");
                         FinalTaxSum += parseFloat(itemtax * FinalSubtotalSum / 100);
                     });
+                    console.log(itemratetax + "Item Rate Tax");
+
+
+                    calculateTax();
+                    @* console.log(finalTaxTotal + "Final Tax Total"); *@
+                    console.log(FinalTaxSum + "Final Tax Sum");
+
+                   
+                   
                      let finaltotal = parseFloat((FinalSubtotalSum + FinalTaxSum)).toFixed(2);
                     $(".finaltotalamt").text(finaltotal);
                     FinalOrderSum = finaltotal;
@@ -1106,11 +1218,12 @@
                         if (itemtax != 0.00) {
                             $('.itemtaxdiv').removeClass('d-none');
                             $('.itemtaxrate').text(itemtax * FinalSubtotalSum / 100);
-                            console.log(itemtax * FinalSubtotalSum / 100 + "Item Tax");
+                           itemratetax = parseFloat(itemtax * FinalSubtotalSum / 100);
                         }
-                        console.log(itemtax + "Item Tax");
                         FinalTaxSum += parseFloat(itemtax * FinalSubtotalSum / 100);
+                        
                     });
+                     console.log(itemratetax + "Item Rate Tax");
                      let finaltotal = parseFloat((FinalSubtotalSum + FinalTaxSum)).toFixed(2);
                     $(".finaltotalamt").text(finaltotal);
                     FinalOrderSum = finaltotal;
@@ -1140,6 +1253,19 @@
         FinalSubtotalSum += parseFloat(rate);
         console.log(FinalSubtotalSum);
         $(".subtotal").text(FinalSubtotalSum.toFixed(2));
+         FinalTaxSum = 0;
+            $(".ItemDataCard").each(function () {
+                var itemtax = $(this).data('taxpercentage');
+                console.log(itemtax + "Item Tax");
+                if (itemtax != 0.00) {
+                    $('.itemtaxdiv').removeClass('d-none');
+                    $('.itemtaxrate').text(itemtax * FinalSubtotalSum / 100);
+                    itemratetax = parseFloat(itemtax * FinalSubtotalSum / 100);
+                }
+                FinalTaxSum += parseFloat(itemtax * FinalSubtotalSum / 100);
+               
+            });
+             console.log(itemratetax + "Item Rate Tax");
         calculateTax();
         finaltotal = parseFloat((FinalSubtotalSum + FinalTaxSum)).toFixed(2);
         $(".finaltotalamt")[0].innerHTML = parseFloat(finaltotal).toFixed(2);
@@ -1177,6 +1303,19 @@
             FinalSubtotalSum -= parseFloat(rate);
             console.log(FinalSubtotalSum);
             $(".subtotal").text(FinalSubtotalSum.toFixed(2));
+             FinalTaxSum = 0;
+            $(".ItemDataCard").each(function () {
+                var itemtax = $(this).data('taxpercentage');
+                console.log(itemtax + "Item Tax");
+                if (itemtax != 0.00) {
+                    $('.itemtaxdiv').removeClass('d-none');
+                    $('.itemtaxrate').text(itemtax * FinalSubtotalSum / 100);
+                     itemratetax = parseFloat(itemtax * FinalSubtotalSum / 100);
+                }
+                FinalTaxSum += parseFloat(itemtax * FinalSubtotalSum / 100);
+               
+            });
+             console.log(itemratetax + "Item Rate Tax");
             calculateTax();
             finaltotal = parseFloat((FinalSubtotalSum + FinalTaxSum)).toFixed(2);
             $(".finaltotalamt")[0].innerHTML = parseFloat(finaltotal).toFixed(2);
@@ -1217,6 +1356,17 @@
                     taxamount = parseFloat(taxamount).toFixed(2);
                 }
                 FinalTaxSum += parseFloat(taxamount);
+                 var existingTaxIndex = FinalTexArray.findIndex(item => item.TaxId == taxId);
+            if (existingTaxIndex !== -1) {
+                FinalTexArray[existingTaxIndex].TaxAmount = taxamount;
+            }
+            else {
+                FinalTexArray.push({
+                    TaxId: taxId,
+                    TaxAmount: taxamount,
+                    TaxTypeId: taxtype
+                });
+            }
             }
             else
             {
@@ -1232,7 +1382,13 @@
                     taxamount = parseFloat(taxamount).toFixed(2);
                 }
                 FinalTaxSum -= parseFloat(taxamount);
+                    var existingTaxIndex = FinalTexArray.findIndex(item => item.TaxId == taxId);
+                    // just delete that element onlt from that array with taxId
+                    if (existingTaxIndex !== -1) {
+                        FinalTexArray.splice(existingTaxIndex, 1);
+                    }
             }
+           
         });
         finaltotal = parseFloat((FinalSubtotalSum + FinalTaxSum)).toFixed(2);
         $(".finaltotalamt")[0].innerHTML = parseFloat(finaltotal).toFixed(2);
@@ -1270,6 +1426,7 @@
             console.log(itemratedss);
             FinalSubtotalSum -= parseFloat(itemratedss) + parseFloat(modifierrate);
             $(".subtotal").text(FinalSubtotalSum.toFixed(2));
+           
             calculateTax();
             finaltotal = parseFloat((FinalSubtotalSum + FinalTaxSum)).toFixed(2);
             $(".finaltotalamt")[0].innerHTML = parseFloat(finaltotal).toFixed(2);
@@ -1348,32 +1505,58 @@
                 }
                 taxValue = parseFloat(tax).toFixed(2);
             }
+            finalTaxTotal += parseFloat(taxValue);
+            
         });
-        console.log(FinalTexArray);
-        console.log("Final Tax Array");
-        @* if ($('.sgstchkbox').prop('checked')) {
-            $('.sgsttaxval')[0].innerHTML = ((parseFloat(@sgst) / 100) * FinalSubtotalSum).toFixed(2);
-            sgsttax = ((parseFloat(@sgst) / 100) * FinalSubtotalSum).toFixed(2);
-            finalTaxTotal += parseFloat(sgsttax);
-        }
-        else {
-            $('.sgsttaxval')[0].innerHTML = ((parseFloat(@sgst) / 100) * FinalSubtotalSum).toFixed(2);
-            sgsttax = ((parseFloat(@sgst) / 100) * FinalSubtotalSum).toFixed(2);
-            finalTaxTotal -= parseFloat(sgsttax);
-        }
-        sgstamt = sgsttax;
-        console.log(sgstamt + "SGST AMT"); *@
-        @* let sgsttax = 0;
-        if (@type == 2) {
-            $('.sgsttaxval')[0].innerHTML = ((parseFloat(@sgst) / 100) * FinalSubtotalSum).toFixed(2);
-            sgsttax = ((parseFloat(@sgst) / 100) * FinalSubtotalSum).toFixed(2);
+        $('.sgstchkboxes').each(function () {
+            if ($(this).prop('checked')) {
+                var taxamount = $(this).data('amount');
+                var taxtype = $(this).data('type');
+                var taxId = $(this).data('id'); 
+                if(taxtype == 2){
+                    $(this)[0].innerHTML = ((parseFloat(taxamount) / 100) * FinalSubtotalSum).toFixed(2);
+                    taxamount = ((parseFloat(taxamount) / 100) * FinalSubtotalSum).toFixed(2);
                 }
-        else {
-            $('.sgsttaxval')[0].innerHTML = parseFloat(@sgst).toFixed(2);
-            sgsttax = parseFloat(@sgst).toFixed(2);
-        } *@
-            FinalTaxSum = finalTaxTotal;
-        console.log(FinalTaxSum + "Final Tax Total");
+                else{
+                    $(this)[0].innerHTML = parseFloat(taxamount).toFixed(2);
+                    taxamount = parseFloat(taxamount).toFixed(2);
+                }
+                finalTaxTotal += parseFloat(taxamount);
+                 var existingTaxIndex = FinalTexArray.findIndex(item => item.TaxId == taxId);
+                if (existingTaxIndex !== -1) {
+                    FinalTexArray[existingTaxIndex].TaxAmount = taxamount;
+                }
+                else {
+                    FinalTexArray.push({
+                        TaxId: taxId,
+                        TaxAmount: taxamount,
+                        TaxTypeId: taxtype
+                    });
+                }
+                FinalArrayToBeSubmit[0].IsSgstIncluded = true;
+            }
+            else
+            {
+                var taxamount = $(this).data('amount');
+                var taxtype = $(this).data('type');
+                var taxId = $(this).data('id');
+                if(taxtype == 2){
+                    $(this)[0].innerHTML = ((parseFloat(taxamount) / 100) * FinalSubtotalSum).toFixed(2);
+                    taxamount = ((parseFloat(taxamount) / 100) * FinalSubtotalSum).toFixed(2);
+                }
+                else{
+                    $(this)[0].innerHTML = parseFloat(taxamount).toFixed(2);
+                    taxamount = parseFloat(taxamount).toFixed(2);
+                }
+                finalTaxTotal -= parseFloat(taxamount);
+                 FinalArrayToBeSubmit[0].IsSgstIncluded = false;
+            }
+           
+            
+        });
+        console.log(FinalTaxSum + "Final Tax Sum");
+        FinalTaxSum += finalTaxTotal;
+        console.log(FinalTexArray);
     }
 
     $("#saveorderdetails").submit(function (e) {
@@ -1388,8 +1571,9 @@
         FinalArrayToBeSubmit[0].totalAmount = FinalOrderSum;
         FinalArrayToBeSubmit[0].orderComment = tempOrderComment;
         FinalArrayToBeSubmit[0].OrderTax = FinalTexArray;
-        if (sgstamt != 0) {
-            FinalArrayToBeSubmit[0].sgstamt = sgstamt;
+        console.log(itemratetax + "Item Rate Tax");
+        if (itemratetax != 0) {
+            FinalArrayToBeSubmit[0].sgstamt = itemratetax;
             FinalArrayToBeSubmit[0].IsSgstIncluded = true;
         }
 

@@ -19,6 +19,8 @@ public interface IAccountManagerOrderAppRepository
     List<CustomerTable> GetTablesByActiveCustomerId(int customerId);
 
     List<OrderTax> GetOrderTaxesByOrderId(int OrderId);
+
+    List<OrderTax> GetOrderTaxesDefaultByOrderId(int OrderId);
     Customer GetCustomer(int customerId);
 
     OrderItem GetOrderItem(int orderId, int itemId);
